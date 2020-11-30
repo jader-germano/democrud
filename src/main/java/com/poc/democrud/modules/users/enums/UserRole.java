@@ -1,12 +1,12 @@
-package com.poc.democrud.modules.usuarios.enums;
+package com.poc.democrud.modules.users.enums;
 
-public enum PermissaoUsuario {
+public enum UserRole {
     ADMIN (1),
     USER (2);
 
     private final int permissaoUsuario;
 
-    PermissaoUsuario(int permissaoUsuario) {
+    UserRole(int permissaoUsuario) {
         this.permissaoUsuario = permissaoUsuario;
     }
 

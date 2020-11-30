@@ -1,4 +1,4 @@
-package com.poc.democrud.modules.usuarios.infra.orm.entities;
+package com.poc.democrud.modules.users.infra.orm.entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,8 +9,8 @@ import javax.persistence.Table;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "Enderecos", schema = "crud")
-public class Enderecos implements Serializable {
+@Table(name = "addresses", schema = "crud")
+public class Addresses implements Serializable {
 
     private static final long serialVersionUID = -1798070786993154676L;
 

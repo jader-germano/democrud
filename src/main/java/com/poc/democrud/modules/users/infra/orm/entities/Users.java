@@ -1,12 +1,13 @@
-package com.poc.democrud.modules.usuarios.infra.orm.entities;
+package com.poc.democrud.modules.users.infra.orm.entities;
 
-import com.poc.democrud.modules.usuarios.enums.PermissaoUsuario;
+import com.poc.democrud.modules.users.enums.UserRole;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -21,8 +22,8 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table(name = "Usuarios", schema = "crud")
-public class Usuarios implements Serializable {
+@Table(name = "users", schema = "crud")
+public class Users implements Serializable {
 
     private static final long serialVersionUID = -1798070786993154676L;
 
@@ -34,44 +35,40 @@ public class Usuarios implements Serializable {
     @Column(name = "name", nullable = false, length = 150)
     private String name;
 
-    @Column(name = "username", nullable = false, length = 50)
+    @Column(name = "username", unique = true, nullable = false, length = 50)
     private String username;
 
-
-    @Column(name = "email", nullable = false, length = 150)
-    private String email;
-
-    @Column(name = "cpf", unique = true, nullable = false, length = 11)
+    @Column(name = "cpf", nullable = false, unique = true, length = 11)
     private String cpf;
 
     @Column(name = "role", nullable = false, length = 1)
     @Enumerated(EnumType.ORDINAL)
-    private PermissaoUsuario role;
+    private UserRole role;
 
-    @Column(name = "senha", nullable = false, length = 100)
-    private String senha;
+    @Column(name = "password", nullable = false, length = 100)
+    private String password;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(
-            name = "contato_usuario",
+                name = "liaison_user",
             schema = "crud",
-            joinColumns = @JoinColumn(name = "usuario_id"),
-            inverseJoinColumns = @JoinColumn(name = "contato_id")
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "liaison_id")
     )
-    private List<Contatos> contatos;
+    private List<Liaisons> liaisons;
 
     @OneToOne(cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn
-    private Enderecos endereco;
+    private Addresses address;
 
     @Override
     public boolean equals(Object o) {
 
         if (this == o)
             return true;
-        if (!(o instanceof Usuarios))
+        if (!(o instanceof Users))
             return false;
-        Usuarios user = (Usuarios) o;
+        Users user = (Users) o;
         return Objects.equals(this.id, user.id) && Objects.equals(this.name, user.name)
                 && Objects.equals(this.role, user.role);
     }
@@ -106,12 +103,12 @@ public class Usuarios implements Serializable {
         this.name = name;
     }
 
-    public String getEmail() {
-        return email;
+    public String getUsername() {
+        return username;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getCpf() {
@@ -122,35 +119,35 @@ public class Usuarios implements Serializable {
         this.cpf = cpf;
     }
 
-    public PermissaoUsuario getRole() {
+    public UserRole getRole() {
         return role;
     }
 
-    public void setRole(PermissaoUsuario role) {
+    public void setRole(UserRole role) {
         this.role = role;
     }
 
-    public String getSenha() {
-        return senha;
+    public String getPassword() {
+        return password;
     }
 
-    public void setSenha(String senha) {
-        this.senha = senha;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
-    public List<Contatos> getContatos() {
-        return contatos;
+    public List<Liaisons> getLiaison() {
+        return liaisons;
     }
 
-    public void setContatos(List<Contatos> contatos) {
-        this.contatos = contatos;
+    public void setLiaison(List<Liaisons> liaisons) {
+        this.liaisons = liaisons;
     }
 
-    public Enderecos getEndereco() {
-        return endereco;
+    public Addresses getAddress() {
+        return address;
     }
 
-    public void setEndereco(Enderecos endereco) {
-        this.endereco = endereco;
+    public void setAddress(Addresses address) {
+        this.address = address;
     }
 }
